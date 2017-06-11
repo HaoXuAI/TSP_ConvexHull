@@ -20,7 +20,7 @@ public class PostmanTest {
      */
     @Test
     public void test1() throws Exception {
-        File file = new File("src/postman/com/input");
+        File file = new File("src/postman/com/input1");
         Scanner scanner;
         int lineCount = 0;
         String[] lines = new String[100];

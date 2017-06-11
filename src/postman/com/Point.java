@@ -2,6 +2,7 @@ package postman.com;
 
 /**
  * Created by haoxu on 6/6/17.
+ * A simple class to represent the point in map
  *
  */
 public class Point {

@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /**
  * Created by haoxu on 6/10/17.
- * The Convex Hull class test
+ * The Convex Hull test class
  */
 public class ConvexHullTest {
 
