@@ -59,6 +59,8 @@ public class ConvexHullTest {
             System.err.println("Please put correct input");
         } finally {
             if (points != null) {
+                System.out.println("input points are:");
+                printList(points);
                 ConvexHull cH = new ConvexHull(points, points.size());
                 ArrayList<Point> res = cH.create();
 
