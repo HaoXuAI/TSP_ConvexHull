@@ -10,9 +10,14 @@ import java.util.Scanner;
 
 /**
  * Created by haoxu on 6/10/17.
+ * A simple test class for postman problem
  */
 public class PostmanTest {
 
+    /**
+     * @throws Exception
+     * test the class with input file input1
+     */
     @Test
     public void test1() throws Exception {
         File file = new File("src/postman/com/input");
@@ -50,6 +55,9 @@ public class PostmanTest {
         }
     }
 
+    /**
+     * test random generated input file
+     */
     @Test
     public void randomTest() {
         Random randomGenerator = new Random();

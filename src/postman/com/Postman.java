@@ -5,25 +5,33 @@ import java.util.List;
 
 /**
  * Created by haoxu on 6/10/17.
+ * the class going through all checkpoints from start to goal
  */
 public class Postman {
 
-    private static final int[] DIRECTION_X = {0, 0, 1, -1};
-    private static final int[] DIRECTION_Y = {1, -1, 0, 0};
+    /**
+     * the points representing the location status
+     */
+    private char[][] points;
 
-    private char[][] inputs;
-
+    /**
+     * Construct the class with input map
+     * @param inputs the input points
+     */
     public Postman(char[][] inputs) {
-        this.inputs = inputs;
+        this.points = inputs;
     }
 
+    /**
+     * @return the shortest path from start to goal passing all checkpoints
+     */
     public int[][] compute() {
 
         /* step 1, initiate environments */
-        if (inputs == null || inputs.length == 0) return null;
+        if (points == null || points.length == 0) return null;
 
-        int n = inputs.length;
-        int m = inputs[0].length;
+        int n = points.length;
+        int m = points[0].length;
 
         Point start;
         Point goal = new Point();
@@ -31,14 +39,14 @@ public class Postman {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (inputs[i][j] == 'S') {
+                if (points[i][j] == 'S') {
                     start = new Point(i, j);
                     allPoints.add(0, start);
                 }
-                if (inputs[i][j] == 'G') {
+                if (points[i][j] == 'G') {
                     goal = new Point(i, j);
                 }
-                if (inputs[i][j] == 'X') {
+                if (points[i][j] == 'X') {
                     allPoints.add(new Point(i, j));
                 }
             }
@@ -46,8 +54,11 @@ public class Postman {
 
         allPoints.add(goal);
 
-        /* step 2, find the shortest path for each pair of points using BFS */
-        ShortestPath shortestPath = new ShortestPath(inputs, n, m);
+        /*
+         * step 2, find the shortest dist for each pair of points of
+         * start point, checkpoints, and end point using BFS
+         */
+        ShortestPath shortestPath = new ShortestPath(points, n, m);
         int num = allPoints.size();
         int[][] dist = new int[num][num];
 
@@ -63,11 +74,10 @@ public class Postman {
 
         dist[num - 1][0] = 0; // to make end node as dummy of start node.
         TSP tsp = new TSP();
-        tsp.computeTSP(dist, allPoints.size());
-
-        ArrayList<Integer> idx = tsp.getRes();
-        int path = tsp.getResult();
-        System.out.println("the shortest distance is: " + path);
+        ArrayList<Integer> idx = tsp.computeTSP(dist, allPoints.size());
+        
+        int distance = tsp.getDistance();
+        System.out.println("the shortest distance is: " + distance);
 
         int[][] res = new int[num][2];
         int j = 0;

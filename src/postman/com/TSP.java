@@ -4,35 +4,54 @@ import java.util.ArrayList;
 
 /**
  * Created by haoxu on 6/6/17.
+ * for traveling salesman problem, solving by DP.
  */
 public class TSP {
-    private ArrayList<Integer> res;
-    private int g[][], p[][], npow, N, d[][];
+    /**
+     * the shortest path
+     */
+    private ArrayList<Integer> path;
 
-    private int result;
+    private int N;
+    private int nPow;
+    private int[][] g;
+    private int[][] p;
+    private int[][] d;
 
-    public int getResult() {
-        return result;
+    /**
+     * the total distance of the path
+     */
+    private int distance;
+
+    /**
+     * @return the distance of the path
+     */
+    public int getDistance() {
+        return distance;
     }
 
-    public ArrayList<Integer> getRes() {
-        return res;
-    }
-
+    /**
+     * build the constructor
+     */
     public TSP() {
-        this.res = new ArrayList<>();
-        this.result = 0;
+        this.path = new ArrayList<>();
+        this.distance = 0;
     }
 
-    public void computeTSP(int[][] inputArray, int n) {
+    /**
+     * @param inputArray input map
+     * @param n total number of all positions
+     * @return the path
+     */
+    public ArrayList<Integer> computeTSP(int[][] inputArray, int n) {
         N = n;
-        npow = (int) Math.pow(2, n);
-        g = new int[n][npow];
-        p = new int[n][npow];
+        nPow = (int) Math.pow(2, n);
+        g = new int[n][nPow];
+        p = new int[n][nPow];
         d = inputArray;
 
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < npow; j++) {
+            for (int j = 0; j < nPow; j++) {
                 g[i][j] = -1;
                 p[i][j] = -1; }
         }
@@ -41,11 +60,16 @@ public class TSP {
             g[i][0] = inputArray[i][0];
         }
 
-        result = tsp(0, npow - 2);
-        res.add(0);
-        getPath(0, npow - 2);
+        distance = tsp(0, nPow - 2);
+        path.add(0);
+        getPath(0, nPow - 2);
+        return path;
     }
 
+    /**
+     * @param start the start position
+     * @param set the end point pos in pow
+     */
     private int tsp(int start, int set) {
         int masked, mask, result = -1, temp;
 
@@ -53,7 +77,7 @@ public class TSP {
             return g[start][set];
         } else {
             for (int x = 0; x < N; x++) {
-                mask = npow - 1 - (int) Math.pow(2, x);
+                mask = nPow - 1 - (int) Math.pow(2, x);
                 masked = set & mask;
 
                 if (masked != set) {
@@ -69,15 +93,20 @@ public class TSP {
         }
     }
 
+    /**
+     * get the path
+     * @param start the start position
+     * @param set the end point position in pow
+     */
     private void getPath(int start, int set) {
         if (p[start][set] == -1) {
             return;
         }
         int x = p[start][set];
-        int mask = npow - 1 - (int) Math.pow(2, x);
+        int mask = nPow - 1 - (int) Math.pow(2, x);
         int masked = set & mask;
 
-        res.add(x);
+        path.add(x);
         getPath(x, masked);
     }
 

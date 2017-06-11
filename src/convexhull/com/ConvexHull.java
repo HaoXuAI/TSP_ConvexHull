@@ -5,17 +5,36 @@ import java.util.Stack;
 
 /**
  * Created by haoxu on 6/10/17.
+ * Given a set of 2D points, this class is returning a convex hull
+ * in array list with Point class to denote each point.
  */
 public class ConvexHull {
+    /**
+     * p0 is the lowest point in the convex hull.
+     */
     private Point p0;
+    /**
+     * points is the convex hull vertex.
+     */
     private ArrayList<Point> points;
+
+    /**
+     * Total number of all input points.s
+     */
     private int n;
 
+    /**
+     * @param points input points
+     * @param n total number of points
+     */
     public ConvexHull(ArrayList<Point> points, int n) {
         this.points = points;
         this.n = n;
     }
 
+    /**
+     * @return the convex hull vertexes.
+     */
     public ArrayList<Point> create() {
 
         int yMin = points.get(0).getY();
@@ -68,6 +87,10 @@ public class ConvexHull {
         return new ArrayList<>(s);
     }
 
+    /**
+     * @param s the stack to store the points.
+     * @return the second point in the stack.
+     */
     private static Point getSecTop(Stack<Point> s) {
         Point top = s.pop();
         Point res = s.peek();
@@ -75,12 +98,23 @@ public class ConvexHull {
         return res;
     }
 
+    /**
+     * swap two points in field points.
+     * @param i, first point index
+     * @param j, second point index
+     */
     private void swap(int i, int j) {
         Point temp = points.get(i);
         points.set(i, points.get(j));
         points.set(j, temp);
     }
 
+    /**
+     * @param p first point
+     * @param q second point
+     * @param r third point
+     * @return if the points are on segment
+     */
     private boolean onSegment(Point p, Point q, Point r) {
         if (q.getX() <= Math.max(p.getX(), r.getX()) &&
                 q.getX() >= Math.min(p.getX(), r.getX()) &&
@@ -90,6 +124,13 @@ public class ConvexHull {
         return false;
     }
 
+    /**
+     * @param p1 first point
+     * @param q1 second point
+     * @param p2 third point
+     * @param q2 forth point
+     * @return if the points intersect
+     */
     private boolean doIntersect(Point p1, Point q1, Point p2, Point q2) {
         int o1 = p1.orientation(q1, p2);
         int o2 = p1.orientation(q1, q2);
@@ -108,6 +149,10 @@ public class ConvexHull {
         return false;
     }
 
+    /**
+     * @param p input point
+     * @return if the point is inside the convex hull
+     */
     public boolean isInside(Point p) {
         if (n < 3) return false;
 

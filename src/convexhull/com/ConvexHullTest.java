@@ -12,15 +12,25 @@ import java.util.Scanner;
 
 /**
  * Created by haoxu on 6/10/17.
+ * The Convex Hull class test
  */
 public class ConvexHullTest {
 
+    /**
+     * helper function to print teh convex hull
+     * @param res the convex hull
+     */
     private static void printList(ArrayList<Point> res) {
         for (Point r : res) {
             System.out.println(r.toString());
         }
     }
 
+    /**
+     * @param fileName the path + file name
+     * @return all input points in the file
+     * @throws FileNotFoundException
+     */
     private ArrayList<Point> readFile(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         Scanner scanner = new Scanner(file);
@@ -37,6 +47,9 @@ public class ConvexHullTest {
         throw new FileNotFoundException("Can not find the file");
     }
 
+    /**
+     * test input file input1
+     */
     @Test
     public void test1() {
         ArrayList<Point> points = null;
@@ -63,8 +76,11 @@ public class ConvexHullTest {
         }
     }
 
+    /**
+     * test input file input2
+     */
     @Test
-    public void test2() throws Exception {
+    public void test2() {
         ArrayList<Point> points = null;
         try {
             points = readFile("src/convexhull/com/input2");
@@ -89,6 +105,10 @@ public class ConvexHullTest {
         }
     }
 
+    /**
+     * generate a random input file and test
+     * @throws Exception
+     */
     @Test
     public void randomTest() throws Exception {
         Random randomGenerator = new Random();
